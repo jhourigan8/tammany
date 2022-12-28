@@ -1,0 +1,24 @@
+[package]
+name = "tammany"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+digest = "0.10.6"
+env_logger = "0.10.0"
+futures = "0.3.25"
+futures-util = "0.3.25"
+log = "0.4.17"
+rand = "0.8.5"
+serde = { version = "1.0.152", features = ["derive"] }
+serde_json = "1.0.91"
+sha2 = "0.10.6"
+tokio = { version = "1.23.0", features = ["full"] }
+tokio-stream = "0.1.11"
+tokio-tungstenite = "0.18.0"
+tungstenite = "0.18.0"
+url = "2.3.1"
+uuid = { version = "1.2.2", features = ["v4", "fast-rng", "macro-diagnostics"] }
+warp = "0.3.3"
