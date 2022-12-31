@@ -1,6 +1,5 @@
 use sha2::Sha256;
 use sha2::digest::{Digest, Output};
-use warp::ws::Message;
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::cmp::PartialEq;
 use serde::{Serialize, Deserialize};
@@ -132,24 +131,16 @@ impl Handler {
         }
     }
 
-    pub fn handle(&mut self, ser_msg: &Message) -> Option<Message> {
-        match ser_msg.to_str() {
-            Ok(ser_in) => {
-                match serde_json::from_str(&ser_in) {
-                    Ok(de_in) => {
-                        self.process(de_in)
-                            .map(|de_out| {
-                                serde_json::to_string(&de_out).unwrap()
-                            })
-                            .map(|se_out| { Message::text(se_out) })
-                    }
-                    Err(de_err) => {
-                        println!("de err: {}", de_err);
-                        None
-                    }
-                }
+    pub fn handle(&mut self, ser_in: &str) -> Option<String> {
+        match serde_json::from_str(ser_in) {
+            Ok(de_in) => {
+                self.process(de_in)
+                    .map(|de_out| {
+                        serde_json::to_string(&de_out).unwrap()
+                    })
             }
-            _ => {
+            Err(de_err) => {
+                println!("de err: {}", de_err);
                 None
             }
         }
